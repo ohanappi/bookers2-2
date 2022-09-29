@@ -1,0 +1,63 @@
+<main>
+    <p id="notice"></p>
+    
+    <div class="container px-5 px-sm-0">
+        
+        <div class="row">
+            <% if @book.errors.any? %>
+              <%= @book.errors.count %>件のエラーが発生しました
+              <br>
+              <ul>
+                <% @book.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+                <% end %>
+              </ul>
+            <% end %>
+        </div>
+        
+        <div class="row">
+
+            <%= render 'userinfo',users:@users,book:@book, user:@user %>
+            
+            <div class="col-md-8 offset-md-1">
+                <h2>Book detail</h2>
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <td>
+                            <%= link_to user_path(@books.user) do %>
+                               <%= image_tag @books.user.get_profile_image(100,100) %><br>
+                               <p><%= @books.user.name %></p>
+                            </td>
+                            <% end %>
+                            
+                            <td>
+                                
+                                <%= link_to book_path(@books) do %>
+                                    <%= @books.title %>
+                                <% end %>
+                                
+                            </td>
+                            
+                            <td>
+                                <%= @books.body %>
+                            </td>
+                            <td>
+                                <% if @books.user == current_user %>
+                                    <%= link_to 'Edit' , edit_book_path(@books) %>
+                                
+                                <% end %>
+                            </td>
+                            
+                            <td>
+                                <% if @books.user == current_user %>
+                                    <%= link_to "Destroy", book_path(@books), method: :delete %>
+                                <% end %>
+                                
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+</main>
